@@ -9,6 +9,7 @@
 export const POLICY = Object.freeze({
   effectiveDate: "2026-08-01",
   applicationEndDate: "2029-07-31",
+  minAge: 20,
   maxAgeExclusive: 50,
   maxAgePlusTerm: 80,
   maxIncome: 2_000_000,
@@ -77,9 +78,9 @@ export function evaluateEligibility(input) {
     },
     {
       id: "age",
-      label: "申貸時未滿 50 歲",
-      pass: Number(input.age) < POLICY.maxAgeExclusive,
-      note: "50 歲（含）以上不符合青安 3.0 年齡條件。",
+      label: "申貸時年滿 20 歲且未滿 50 歲",
+      pass: Number(input.age) >= POLICY.minAge && Number(input.age) < POLICY.maxAgeExclusive,
+      note: "未滿 20 歲或 50 歲（含）以上，原則上不符合青安 3.0 年齡條件。",
     },
     {
       id: "term",

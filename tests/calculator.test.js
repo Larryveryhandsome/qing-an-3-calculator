@@ -77,3 +77,8 @@ test("age and property price failures are surfaced", () => {
     ["age", "term", "price"],
   );
 });
+
+test("under-age applicants are flagged", () => {
+  const result = calculateScenario({ ...eligibleInput, age: 15 });
+  assert.equal(result.eligibility.checks.find((c) => c.id === "age").pass, false);
+});
