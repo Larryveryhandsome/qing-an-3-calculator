@@ -34,6 +34,32 @@ export const POLICY = Object.freeze({
   ]),
 });
 
+// Hard sanity bounds applied to every raw input before any calculation. They
+// stop absurd values (1e308, 10,000,000 years, NaN) from freezing the tab or
+// printing NaN/Infinity amounts. They are far above any real-world value.
+export const INPUT_BOUNDS = Object.freeze({
+  propertyPrice: 1e11,
+  requestedLoan: 1e11,
+  annualIncome: 1e11,
+  age: 150,
+  termYears: 100,
+  graceYears: 100,
+  baseRatePercent: 100,
+});
+
+export function sanitizeInput(input) {
+  const clamped = [];
+  const out = { ...input };
+  for (const [key, max] of Object.entries(INPUT_BOUNDS)) {
+    const raw = Number(input[key]);
+    let value = Number.isNaN(raw) ? 0 : raw; // +/-Infinity are clamped below
+    value = Math.min(Math.max(value, 0), max);
+    if (value !== raw && !(raw === 0 || input[key] === "" || input[key] == null)) clamped.push(key);
+    out[key] = value;
+  }
+  return { input: out, clamped };
+}
+
 export const LOCATION_LABELS = Object.freeze({
   taipei: "臺北市",
   newTaipeiOrHsinchu: "新北市、新竹縣市",
@@ -147,9 +173,17 @@ function annuityPayment(balance, monthlyRate, remainingMonths) {
  * each month so the schedule always pays off on the selected final month.
  */
 export function buildSchedule({ principal, termYears, graceYears, baseRatePercent, subsidized = true }) {
-  const totalMonths = Math.round(Number(termYears) * 12);
-  const graceMonths = Math.round(Number(graceYears) * 12);
-  let balance = Number(principal);
+  const MAX_MONTHS = INPUT_BOUNDS.termYears * 12;
+  const safeMonths = (years) => {
+    const months = Math.round(Number(years) * 12);
+    return Number.isFinite(months) ? Math.min(Math.max(months, 0), MAX_MONTHS) : 0;
+  };
+  const totalMonths = safeMonths(termYears);
+  const graceMonths = safeMonths(graceYears);
+  const safeRate = Number.isFinite(Number(baseRatePercent)) ? Number(baseRatePercent) : 0;
+  baseRatePercent = Math.min(Math.max(safeRate, 0), INPUT_BOUNDS.baseRatePercent);
+  let balance = Number.isFinite(Number(principal)) ? Math.max(0, Number(principal)) : 0;
+  principal = balance;
   let totalInterest = 0;
   const months = [];
 
@@ -209,7 +243,8 @@ export function summarizeSchedule(schedule) {
   return years;
 }
 
-export function calculateScenario(input) {
+export function calculateScenario(rawInput) {
+  const { input, clamped } = sanitizeInput(rawInput);
   const eligibility = evaluateEligibility(input);
   const limits = calculateLoanLimits(input);
   const requestedLoan = Math.max(0, Number(input.requestedLoan));
@@ -235,6 +270,8 @@ export function calculateScenario(input) {
     .reduce((sum, baselineMonth, index) => sum + baselineMonth.interest - schedule.months[index].interest, 0);
 
   return {
+    clamped,
+    input,
     eligibility,
     limits,
     requestedLoan,

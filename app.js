@@ -149,7 +149,7 @@ function renderResult(result, input) {
 
   output.maxLoan.textContent = formatCurrency(result.limits.programCap);
   output.loanCapNote.textContent = `${householdLabel} ${formatCurrency(result.limits.householdCap)}；8 成 LTV ${formatCurrency(result.limits.ltvCap)}`;
-  output.downPayment.textContent = formatCurrency(Math.max(0, input.propertyPrice - result.approvedEstimate));
+  output.downPayment.textContent = formatCurrency(Math.max(0, result.input.propertyPrice - result.approvedEstimate));
   output.firstPaymentLabel.textContent = input.graceYears > 0 ? "寬限期首月月付" : "首期預估月付";
   output.firstPayment.textContent = formatCurrency(result.firstPayment);
   output.firstPaymentNote.textContent = input.graceYears > 0 ? "寬限期間僅繳利息" : `第 1–3 年利率 ${result.years[0]?.ratePercent.toFixed(3) ?? "—"}%`;
@@ -174,6 +174,9 @@ function calculate() {
   setFieldValidity();
   const input = getInput();
   const result = calculateScenario(input);
+  if (result.clamped.length) {
+    output.inputMessage.textContent = "輸入數值超出合理範圍，已以上限／下限試算，請確認欄位。";
+  }
   renderResult(result, input);
 }
 

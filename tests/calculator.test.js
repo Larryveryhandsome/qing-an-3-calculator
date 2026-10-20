@@ -82,3 +82,56 @@ test("under-age applicants are flagged", () => {
   const result = calculateScenario({ ...eligibleInput, age: 15 });
   assert.equal(result.eligibility.checks.find((c) => c.id === "age").pass, false);
 });
+
+// ---- QA round 2: formula cross-check and hostile inputs ----
+import { sanitizeInput, INPUT_BOUNDS } from "../calculator.js";
+
+test("unsubsidized schedule matches the closed-form annuity payment", () => {
+  for (const [P, years, rate] of [[10_000_000, 40, 2.275], [6_000_000, 30, 2.1], [3_000_000, 7, 3.5]]) {
+    const s = buildSchedule({ principal: P, termYears: years, graceYears: 0, baseRatePercent: rate, subsidized: false });
+    const r = rate / 100 / 12;
+    const n = years * 12;
+    const pmt = (P * r) / (1 - (1 + r) ** -n);
+    for (const m of [1, 2, n >> 1, n]) assert.ok(Math.abs(s.months[m - 1].payment - pmt) < 1e-6);
+    assert.ok(Math.abs(s.totalInterest - (pmt * n - P)) < 1e-3);
+    assert.ok(s.finalBalance < 1e-6);
+  }
+});
+
+test("grace period then closed-form annuity over the remaining months (unsubsidized)", () => {
+  const P = 12_000_000, rate = 2.5, g = 5, years = 40;
+  const s = buildSchedule({ principal: P, termYears: years, graceYears: g, baseRatePercent: rate, subsidized: false });
+  const r = rate / 100 / 12, n = (years - g) * 12;
+  const pmt = (P * r) / (1 - (1 + r) ** -n);
+  assert.ok(Math.abs(s.months[0].payment - P * r) < 1e-6);
+  assert.ok(Math.abs(s.months[g * 12].payment - pmt) < 1e-6);
+  assert.ok(s.finalBalance < 1e-6);
+});
+
+test("subsidized schedule always pays off, for several terms", () => {
+  for (const years of [1, 3, 6, 7, 20, 30, 40]) {
+    const s = buildSchedule({ principal: 9_000_000, termYears: years, graceYears: 0, baseRatePercent: 2.275 });
+    assert.ok(s.finalBalance < 1e-6, `term ${years}`);
+    assert.equal(s.months.length, years * 12);
+  }
+});
+
+test("hostile numeric input never produces NaN/Infinity or a huge loop", () => {
+  const bad = [NaN, "", "abc", null, undefined, -5, 1e308, Infinity, -Infinity, 1e7];
+  for (const v of bad) {
+    const t = Date.now();
+    const r = calculateScenario({ ...eligibleInput, termYears: v, graceYears: v, baseRatePercent: v, propertyPrice: v, requestedLoan: v, age: v, annualIncome: v });
+    assert.ok(Date.now() - t < 2000, `slow for ${String(v)}`);
+    for (const n of [r.firstPayment, r.interestSaving, r.limits.programCap, r.approvedEstimate, r.schedule.totalInterest, r.limits.minimumDownPayment]) {
+      assert.ok(Number.isFinite(n), `non-finite for ${String(v)}`);
+    }
+    assert.ok(r.schedule.months.length <= INPUT_BOUNDS.termYears * 12);
+  }
+});
+
+test("absurd term is clamped and flagged, and still fails the 40-year eligibility check", () => {
+  const r = calculateScenario({ ...eligibleInput, termYears: 10_000_000 });
+  assert.deepEqual(r.clamped, ["termYears"]);
+  assert.equal(r.eligibility.checks.find((c) => c.id === "termLimit").pass, false);
+  assert.deepEqual(sanitizeInput({ ...eligibleInput }).clamped, []);
+});
