@@ -13,9 +13,9 @@ test("預設設定是明顯的示範資料，而且會顯示示範標示", () =>
 });
 
 test("換成自己的資料：電話、LINE ID、照片", () => {
-  const a = normalizeAdvisor({ demo: false, name: "陳示範", phone: "0900-123-456", line: "@myshop", photo: "assets/me.jpg" });
+  const a = normalizeAdvisor({ demo: false, name: "陳示範", phone: "0900-000-456", line: "@myshop", photo: "assets/me.jpg" });
   assert.equal(a.demo, false);
-  assert.equal(a.tel, "tel:0900123456");
+  assert.equal(a.tel, "tel:0900000456");
   assert.equal(a.lineUrl, "https://line.me/R/ti/p/%40myshop");
   assert.equal(a.photo, "assets/me.jpg");
 });
