@@ -5,6 +5,10 @@ import {
   formatCurrency,
   formatWan,
 } from "./calculator.js";
+import advisorConfig from "./advisor.config.js";
+import { renderAdvisor } from "./advisor.js";
+
+renderAdvisor(document.querySelector("#advisor"), advisorConfig);
 
 const form = document.querySelector("#calculator-form");
 const fields = {

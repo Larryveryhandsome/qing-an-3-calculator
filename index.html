@@ -28,21 +28,22 @@
     </header>
 
     <main id="top">
-      <section class="advisor-banner" aria-labelledby="advisor-name">
-        <figure class="advisor-photo-wrap">
-          <img class="advisor-photo" src="assets/lin-chi-wei.jpg" width="1049" height="1566" alt="有巢氏房屋顧問林其衞" fetchpriority="high" />
-        </figure>
+      <section class="advisor-banner" id="advisor" aria-labelledby="advisor-name">
+        <!-- 顧問卡內容在 advisor.config.js 設定，這裡只是沒有 JavaScript 時的示範預設 -->
+        <figure class="advisor-photo-wrap"><span class="advisor-initial" aria-hidden="true">王</span></figure>
         <div class="advisor-copy">
-          <p class="eyebrow">宜蘭購屋・房貸規劃諮詢</p>
-          <h2 id="advisor-name">林其衞</h2>
-          <p>有巢氏房屋｜宜蘭黎明國小加盟店</p>
+          <p class="advisor-demo" data-advisor="demo">示範資料，請換成你自己的</p>
+          <p class="eyebrow" data-advisor="eyebrow">購屋・房貸規劃諮詢</p>
+          <h2 id="advisor-name" data-advisor="name">王小明</h2>
+          <p data-advisor="company">示範不動產｜示範店</p>
         </div>
         <div class="advisor-action">
           <span>專人諮詢</span>
-          <a class="advisor-phone" href="tel:0900000000" aria-label="撥打電話給林其衞，0900 000 000">
+          <a class="advisor-phone" data-advisor="phone" href="tel:0900000000" aria-label="撥打電話給王小明，0900-000-000">
             <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.6 2.8h3l1.5 4.1-2.15 1.78a16 16 0 0 0 6.47 6.47l1.78-2.15 4.1 1.5v3c0 1.1-.9 2-2 2C10.1 19.5 4.5 13.9 4.5 4.8c0-1.1.9-2 2.1-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            0900-000-000
+            <span data-advisor="phone-text">0900-000-000</span>
           </a>
+          <a class="advisor-phone advisor-line" data-advisor="line" href="#" hidden rel="noopener noreferrer" target="_blank">LINE 諮詢</a>
         </div>
       </section>
 

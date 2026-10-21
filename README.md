@@ -38,6 +38,18 @@ python -m http.server 8080
 2. Netlify 會提供 `*.netlify.app` 公開網址；可在 Site configuration 綁定自有網域。
 3. 日後更新檔案後重新拖入，或連接 GitHub repository 取得自動部署。
 
+## 換成你自己的顧問資料
+
+頁面上方的「顧問卡」預設是示範資料（王小明、0900-000-000），並且會顯示「示範資料，請換成你自己的」。換成自己的只要改一個檔：
+
+1. 打開 `advisor.config.js`。
+2. 把 `name`（姓名）、`company`（公司／分店）、`phone`（電話）、`line`（LINE ID 例如 `@myshop`，或 `https://lin.ee/…` 短網址）改成你的。
+3. 要放照片的話，把照片放進 `assets/` 資料夾（例如 `assets/me.jpg`），再把 `photo` 填成 `"assets/me.jpg"`；不放照片就留空，會顯示姓名第一個字。
+4. 把 `demo` 改成 `false`，示範標示就會消失。
+5. 不想顯示顧問卡：把 `enabled` 改成 `false`。
+
+`phone`、`line` 留空就不會顯示那個按鈕。照片只能用站內的相對路徑，原則上不支援外部網址。
+
 ## 對外部署（GitHub Pages）
 
 專案已附 GitHub Pages 自動部署工作流程。首次推送到公開 GitHub repository 的 `main` 分支後，工作流程會自動發布網站；後續每次推送也會更新。GitHub Pages 對公開 repository 可使用，實際網址由 GitHub 在部署完成後提供。
@@ -62,4 +74,4 @@ python -m http.server 8080
 
 - 💬 LINE 官方帳號：[@812ibtir](https://lin.ee/pdYGARu)（請註明「青安 3.0 房貸試算 客製化」）
 - 🏢 留白事務所：網頁設計、AI 自動化、房仲遠端助理
-- 👤 作者：[林其衞 Larry](https://github.com/Larryveryhandsome)
+- 👤 作者：[留白事務所](https://github.com/Larryveryhandsome)
