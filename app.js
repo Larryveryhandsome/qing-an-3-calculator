@@ -89,6 +89,7 @@ function setFieldValidity() {
   if (grace >= term) message = "寬限期需小於貸款年限。";
   if (term > POLICY.maxTermYears) message = "青安 3.0 最長貸款年限為 40 年。";
   if (grace > POLICY.maxGraceYears) message = "青安 3.0 寬限期最長為 5 年。";
+  if (!(numberValue(fields.propertyPrice) > 0)) message = "請先輸入房屋總價，下方結果才有意義。";
   output.inputMessage.textContent = message;
 }
 
@@ -158,8 +159,9 @@ function renderResult(result, input) {
   output.firstPayment.textContent = formatCurrency(result.firstPayment);
   output.firstPaymentNote.textContent = input.graceYears > 0 ? "寬限期間僅繳利息" : `第 1–3 年利率 ${result.years[0]?.ratePercent.toFixed(3) ?? "—"}%`;
   output.interestSaving.textContent = formatCurrency(result.interestSaving);
-  output.status.textContent = result.eligibility.eligible ? "條件初步符合" : "有條件待確認";
-  output.status.className = `result-status ${result.eligibility.eligible ? "status-pass" : "status-attention"}`;
+  const noPrice = !(input.propertyPrice > 0);
+  output.status.textContent = noPrice ? "請先輸入房屋總價" : result.eligibility.eligible ? "條件初步符合" : "有條件待確認";
+  output.status.className = `result-status ${!noPrice && result.eligibility.eligible ? "status-pass" : "status-attention"}`;
 
   renderChecks(result);
   renderSchedule(result);
