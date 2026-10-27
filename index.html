@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0b1f33" />
+    <meta
+      name="description"
+      content="免費新青安 3.0 試算：快速檢查資格、最高可貸額度、首期自備款、月付金與 3+3 利息補貼影響。"
+    />
+    <meta property="og:title" content="青安 3.0 房貸試算所" />
+    <meta property="og:description" content="資格、額度、月付與 3+3 利息補貼，一次看懂。" />
+    <meta property="og:type" content="website" />
+    <link rel="manifest" href="site.webmanifest" />
+    <link rel="stylesheet" href="styles.css" />
+    <title>青安 3.0 房貸試算所｜資格、額度、月付一次看懂</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#calculator">跳到試算表單</a>
+    <header class="site-header">
+      <a class="brand" href="#top" aria-label="青安 3.0 房貸試算所首頁">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 10.5 12 4l8 6.5v8.25a1.25 1.25 0 0 1-1.25 1.25H5.25A1.25 1.25 0 0 1 4 18.75V10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 20v-5.5h6V20" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+        </span>
+        <span>青安 <strong>3.0</strong> 試算所</span>
+      </a>
+      <div class="header-status"><span class="status-dot" aria-hidden="true"></span> 115/8/1 起適用</div>
+    </header>
+
+    <main id="top">
+      <section class="advisor-banner" id="advisor" aria-labelledby="advisor-name">
+        <!-- 顧問卡內容在 advisor.config.js 設定，這裡只是沒有 JavaScript 時的示範預設 -->
+        <figure class="advisor-photo-wrap"><span class="advisor-initial" aria-hidden="true">王</span></figure>
+        <div class="advisor-copy">
+          <p class="advisor-demo" data-advisor="demo">示範資料，請換成你自己的</p>
+          <p class="eyebrow" data-advisor="eyebrow">購屋・房貸規劃諮詢</p>
+          <h2 id="advisor-name" data-advisor="name">王小明</h2>
+          <p data-advisor="company">示範不動產｜示範店</p>
+        </div>
+        <div class="advisor-action">
+          <span>專人諮詢</span>
+          <a class="advisor-phone" data-advisor="phone" href="tel:0900000000" aria-label="撥打電話給王小明，0900-000-000">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M6.6 2.8h3l1.5 4.1-2.15 1.78a16 16 0 0 0 6.47 6.47l1.78-2.15 4.1 1.5v3c0 1.1-.9 2-2 2C10.1 19.5 4.5 13.9 4.5 4.8c0-1.1.9-2 2.1-2Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span data-advisor="phone-text">0900-000-000</span>
+          </a>
+          <a class="advisor-phone advisor-line" data-advisor="line" href="#" hidden rel="noopener noreferrer" target="_blank">LINE 諮詢</a>
+        </div>
+      </section>
+
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">青年安心成家購屋優惠貸款</p>
+          <h1 id="hero-title">把買房壓力，<br /><em>先算清楚。</em></h1>
+          <p class="hero-lede">依青安 3.0 最新公告，快速評估資格、可貸上限、月付與前 6 年利息補貼。試算只在你的裝置上進行。</p>
+          <a class="button button-primary" href="#calculator">開始我的試算 <span aria-hidden="true">→</span></a>
+        </div>
+        <aside class="policy-preview" aria-label="青安3.0重點">
+          <p class="preview-kicker">2026 青安 3.0</p>
+          <div class="policy-number">3 <span>+ 3</span></div>
+          <p>前 3 年完整補貼，後 3 年逐年收斂；讓利率回歸更平緩。</p>
+          <div class="pill-row">
+            <span class="pill">最高 8 成</span>
+            <span class="pill">最長 40 年</span>
+            <span class="pill">寬限最長 5 年</span>
+          </div>
+        </aside>
+      </section>
+
+      <section class="notice" aria-label="重要提醒">
+        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 8v4m0 4h.01M10.29 3.86 2.82 17a2 2 0 0 0 1.74 3h14.88a2 2 0 0 0 1.74-3L13.71 3.86a2 2 0 0 0-3.42 0Z" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+        <p><strong>這是試算，不是核貸承諾。</strong> 銀行仍會依鑑價、信用、負債與還款能力核定；利率可隨市場調整。</p>
+      </section>
+
+      <section class="calculator-layout" id="calculator" aria-labelledby="calculator-title">
+        <div class="form-panel">
+          <div class="section-heading">
+            <p class="eyebrow">01 ／ 輸入你的情境</p>
+            <h2 id="calculator-title">先確認條件，再看月付</h2>
+            <p>所有金額均以新臺幣計；房價與所得以「萬元」輸入。</p>
+          </div>
+
+          <form id="calculator-form" novalidate>
+            <fieldset>
+              <legend>房屋與申請人</legend>
+              <div class="field-grid">
+                <label class="field">
+                  <span>購屋縣市</span>
+                  <select id="location" name="location">
+                    <option value="taipei">臺北市</option>
+                    <option value="newTaipeiOrHsinchu">新北市／新竹縣市</option>
+                    <option value="other" selected>其他縣市</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>房屋總價 <small>萬元</small></span>
+                  <input id="property-price" name="propertyPrice" inputmode="numeric" min="1" max="10000" step="10" type="number" value="1500" required />
+                </label>
+                <label class="field">
+                  <span>申貸年齡</span>
+                  <input id="age" name="age" inputmode="numeric" min="20" max="100" step="1" type="number" value="35" required />
+                </label>
+                <label class="field">
+                  <span>本人年所得 <small>萬元</small></span>
+                  <input id="income" name="annualIncome" inputmode="numeric" min="0" max="10000" step="1" type="number" value="150" required />
+                </label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>家庭與自住條件</legend>
+              <div class="choice-stack">
+                <label class="check-row"><input id="newlywed" name="newlywed" type="checkbox" /><span><strong>申請日前 2 年內結婚登記</strong><small>最高貸款額度可提高至 1,200 萬元</small></span></label>
+                <label class="check-row"><input id="minor-child" name="hasMinorChild" type="checkbox" /><span><strong>育有未成年子女</strong><small>最高貸款額度可提高至 1,500 萬元</small></span></label>
+                <label class="check-row"><input id="no-home" name="noHome" type="checkbox" checked /><span><strong>本人、配偶及未成年子女均無自有住宅</strong><small>青安資格的基本條件</small></span></label>
+                <label class="check-row"><input id="self-use" name="selfUse" type="checkbox" checked /><span><strong>購買後將作自住使用</strong><small>申貸時須簽自住切結書</small></span></label>
+                <label class="check-row"><input id="never-used" name="neverUsed" type="checkbox" checked /><span><strong>未曾使用青安／農安優惠貸款</strong><small>此優惠限貸一次</small></span></label>
+              </div>
+            </fieldset>
+
+            <fieldset>
+              <legend>貸款設定</legend>
+              <div class="field-grid">
+                <label class="field">
+                  <span>預計貸款年限 <small>年</small></span>
+                  <input id="term-years" name="termYears" inputmode="numeric" min="1" max="40" step="1" type="number" value="40" required />
+                </label>
+                <label class="field">
+                  <span>寬限期 <small>年</small></span>
+                  <input id="grace-years" name="graceYears" inputmode="numeric" min="0" max="5" step="1" type="number" value="0" required />
+                </label>
+                <label class="field">
+                  <span>優惠前一段式利率 <small>%</small></span>
+                  <input id="base-rate" name="baseRate" inputmode="decimal" min="0" max="20" step="0.001" type="number" value="2.275" required aria-describedby="rate-help" />
+                  <small class="field-help" id="rate-help">預設值用於試算，請以承辦銀行報價為準。</small>
+                </label>
+                <label class="field">
+                  <span>預計申貸額度 <small>萬元</small></span>
+                  <input id="requested-loan" name="requestedLoan" inputmode="numeric" min="1" max="5000" step="10" type="number" value="1000" required />
+                </label>
+              </div>
+            </fieldset>
+            <div class="form-actions">
+              <button class="button button-secondary" type="button" id="reset-button">還原範例</button>
+              <p id="input-message" class="input-message" aria-live="polite"></p>
+            </div>
+          </form>
+        </div>
+
+        <aside class="result-panel" aria-labelledby="result-title">
+          <div class="result-header">
+            <div>
+              <p class="eyebrow">02 ／ 你的試算結果</p>
+              <h2 id="result-title">資格與還款摘要</h2>
+            </div>
+            <span class="result-status" id="result-status" aria-live="polite">計算中</span>
+          </div>
+
+          <div class="summary-grid">
+            <article class="metric metric-primary"><span>預估可貸上限</span><strong id="max-loan">—</strong><small id="loan-cap-note">—</small></article>
+            <article class="metric"><span>依申貸額度自備款</span><strong id="down-payment">—</strong><small>未含稅費、裝修及仲介費</small></article>
+            <article class="metric"><span id="first-payment-label">首期月付</span><strong id="first-payment">—</strong><small id="first-payment-note">—</small></article>
+            <article class="metric"><span>6 年估計省息</span><strong id="interest-saving">—</strong><small>相對未套用補貼的同條件試算</small></article>
+          </div>
+
+          <section class="eligibility-card" aria-labelledby="eligibility-title">
+            <div class="card-title-row">
+              <h3 id="eligibility-title">資格逐項檢查</h3>
+              <span id="check-count">—</span>
+            </div>
+            <ul class="check-list" id="check-list"></ul>
+          </section>
+
+          <section class="loan-note" id="loan-note" aria-live="polite"></section>
+        </aside>
+      </section>
+
+      <section class="schedule-section" aria-labelledby="schedule-title">
+        <div class="section-heading schedule-heading">
+          <div>
+            <p class="eyebrow">03 ／ 還款路徑</p>
+            <h2 id="schedule-title">前 6 年利率與月付變化</h2>
+          </div>
+          <button class="button button-print" type="button" id="print-button">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 9V3h10v6m-10 6H5a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-2m-10 0v6h10v-6H7Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg>
+            列印／儲存報告
+          </button>
+        </div>
+        <div class="table-wrap" tabindex="0">
+          <table>
+            <thead><tr><th>貸款年度</th><th>優惠後利率</th><th>補貼幅度</th><th>預估月付</th><th>年度利息</th><th>年末剩餘本金</th></tr></thead>
+            <tbody id="schedule-body"></tbody>
+          </table>
+        </div>
+        <p class="table-note">月付以當期剩餘本金、剩餘年限重新試算；實際銀行攤還方式與利率調整日可能不同。</p>
+      </section>
+
+      <section class="facts-section" aria-labelledby="facts-title">
+        <div class="section-heading"><p class="eyebrow">政策快覽</p><h2 id="facts-title">這份試算依據什麼？</h2></div>
+        <div class="fact-grid">
+          <article><span class="fact-number">50</span><p>申貸時需年滿 20 歲且未滿 50 歲，且年齡加核貸年限不得超過 80。</p></article>
+          <article><span class="fact-number">200</span><p>借款人本人年所得不得超過 200 萬元。</p></article>
+          <article><span class="fact-number">8 成</span><p>最高成數 80%，實際核貸仍視銀行鑑價與徵審。</p></article>
+          <article><span class="fact-number">3+3</span><p>前 3 年補貼 2 碼，第 4 至 6 年每年減少半碼。</p></article>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M4 10.5 12 4l8 6.5v8.25a1.25 1.25 0 0 1-1.25 1.25H5.25A1.25 1.25 0 0 1 4 18.75V10.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 20v-5.5h6V20" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span><span>青安 <strong>3.0</strong> 試算所</span></a><p>免費、免登入；資料不會離開你的裝置。</p><p class="custom-ad">需要改成你們公司的版本、幫忙安裝或串接？加 LINE 官方帳號 <a href="https://line.me/R/ti/p/@812ibtir" target="_blank" rel="noopener">@812ibtir</a>（留白事務所・林其衞），原則上 1～2 個工作天回覆報價。</p></div>
+      <div class="source-links"><span>政策資料更新：2026/07/18</span><a href="https://www.mof.gov.tw/singlehtml/384fb3077bb349ea973e7fc6f13b6974?cntId=482aa9c142b34abc83750cb64c15cb11" target="_blank" rel="noopener noreferrer">財政部公告</a><a href="https://www.ey.gov.tw/" target="_blank" rel="noopener noreferrer">行政院官網</a></div>
+    </footer>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

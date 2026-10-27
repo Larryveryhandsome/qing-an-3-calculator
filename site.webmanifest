@@ -1,0 +1,10 @@
+{
+  "name": "青安 3.0 房貸試算所",
+  "short_name": "青安 3.0 試算",
+  "description": "新青安 3.0 資格、額度與月付試算工具。",
+  "lang": "zh-Hant-TW",
+  "display": "standalone",
+  "start_url": "/",
+  "background_color": "#f6f8f8",
+  "theme_color": "#0b1f33"
+}
